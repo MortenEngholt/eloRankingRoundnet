@@ -23,7 +23,7 @@ class Team():
     #Show teams ranking from team database
     def team_ranking(list):
         print("---------------------------------------------------")
-        print("             ROUNDNET PICK-UP RANKINGS")
+        print("         ROUNDNET PICK-UP RANKINGS - TEAMS")
         print("---------------------------------------------------")
         n = 1
         for t in list:
@@ -43,10 +43,10 @@ class Team():
     def game_team(list):
         print("What is the name of the wining team? - Chose from team list:  ")
         Team.print_teams(list)
-        winner = input().strip()
+        winner = input().capitalize().strip()
         print("What is the name of the losing team? - Chose from team list:  ")
         Team.print_teams(list)
-        loser = input().strip()
+        loser = input().capitalize().strip()
         if winner == loser:
             print("Sorry can't compute game between the same player")
         else:

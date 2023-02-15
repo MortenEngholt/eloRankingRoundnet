@@ -11,8 +11,8 @@ mortenEngholt = Player("Morten", "Engholt", 1600)
 hjalteKnudsen = Player("Hjalte", "Knudsen", 1550)
 rasmineBak = Player("Rasmine", "Bak", 1430)
 askeHammar = Player("Aske", "Hammar", 1426)
-t1 = Team(mortenEngholt, hjalteKnudsen, "t1")
-t2 = Team(rasmineBak, askeHammar, "t2")
+t1 = Team(mortenEngholt, hjalteKnudsen, "T1")
+t2 = Team(rasmineBak, askeHammar, "T2")
 teams.append(t1)
 teams.append(t2)
 players.append(mortenEngholt)
@@ -29,11 +29,11 @@ def option_not_availble():
 
 #Primary code to run program giving the user multiple options
 while True:
-    selection = input("What would you like to do? (Create/Game/Rankings/Quit) ").capitalize().strip()
+    selection = input("What would you like to do? (Create/Game/Ranking/Quit) ").capitalize().strip()
     # Chosen to create a new player
     if selection == "Create":
         select = input("What would you like to create team (T) or player (P)?: ").capitalize().strip()
-        if select == "Team":
+        if select == "T":
             print("What is the first name of the first player? ")
             Player.print_players(players)
             first_player = input().capitalize().strip()
@@ -42,7 +42,7 @@ while True:
             second_player = input().capitalize().strip()
             team_name = input("What is the name of the team? ").capitalize().strip()
             teams.append(Team(Player.find_player_name(first_player, players),Player.find_player_name(second_player, players),team_name))
-        elif select == "Player":
+        elif select == "P":
             first_name = input("What is the players first name? ").capitalize().strip()
             last_name = input("What is the players last name? ").capitalize().strip()
             players.append(Player(first_name,last_name, 1500))
@@ -60,7 +60,7 @@ while True:
             option_not_availble()
 
     #Shows the rankings of players or teams sorted by Elo
-    elif selection == "Rankings":
+    elif selection == "Ranking":
         team_or_player = input("Would you like to see the teams (T) og players (P) ranking? ").capitalize().strip()
         if team_or_player == "T":
             list_sort(teams, "elo")

@@ -24,7 +24,7 @@ class Player():
     #Show player ranking
     def player_ranking(list):
         print("---------------------------------------------------")
-        print("             ROUNDNET PICK-UP RANKINGS")
+        print("        ROUNDNET PICK-UP RANKINGS - PLAYERS")
         print("---------------------------------------------------")
         n = 1
         for p in list:
