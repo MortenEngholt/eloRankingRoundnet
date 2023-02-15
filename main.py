@@ -75,4 +75,3 @@ while True:
     elif selection == "Quit":
         print("Thanks for updating the rankings!")
         break
-
