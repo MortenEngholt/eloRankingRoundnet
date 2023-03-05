@@ -18,7 +18,7 @@ class Team():
     #Prints all teams currently in the database, showing the team name and the first name of both players
     def print_teams(list):
         for l in list:
-            print(l.team_name + ": " + l.player_1.first_name + " and " + l.player_2.first_name)
+            print(l.team_name + ": " + l.player_1.full_name + " and " + l.player_2.full_name)
 
     #Show teams ranking from team database
     def team_ranking(list):
@@ -27,7 +27,7 @@ class Team():
         print("---------------------------------------------------")
         n = 1
         for t in list:
-            print(str(n) + ". " + t.team_name + "(" + t.player_1.first_name + ", " + t.player_2.first_name + ") " + "Elo: " + str(int(t.elo)))
+            print(str(n) + ". " + t.team_name + "(" + t.player_1.full.name + ", " + t.player_2.full.name + ") " + "Elo: " + str(int(t.elo)))
             n += 1
         print("---------------------------------------------------")
 
@@ -61,16 +61,16 @@ class Team():
             loser.player_1.elo = loser.player_1.elo + k * (expected_win_probability - 1)
             loser.player_2.elo = loser.player_2.elo + k * (expected_win_probability - 1)
             print(
-                "The new rankingpoints of " + winner.player_1.first_name + " " + winner.player_1.last_name + " is: " + str(
+                "The new rankingpoints of " + winner.player_1.full_name + " is: " + str(
                     int(winner.player_1.elo)))
             print(
-                "The new rankingpoints of " + winner.player_2.first_name + " " + winner.player_2.last_name + " is: " + str(
+                "The new rankingpoints of " + winner.player_2.full_name + " is: " + str(
                     int(winner.player_2.elo)))
             print(
-                "The new rankingpoints of " + loser.player_1.first_name + " " + loser.player_1.last_name + " is: " + str(
+                "The new rankingpoints of " + loser.player_1.full_name + " is: " + str(
                     int(loser.player_1.elo)))
             print(
-                "The new rankingpoints of " + loser.player_2.first_name + " " + loser.player_2.last_name + " is: " + str(
+                "The new rankingpoints of " + loser.player_2.full_name + " is: " + str(
                     int(loser.player_2.elo)))
             winner = None
             loser = None
