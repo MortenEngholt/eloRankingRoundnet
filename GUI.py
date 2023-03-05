@@ -78,7 +78,7 @@ header.pack(side= TOP)
 mainMenu = Frame(window, padx=5, pady=5, bg="white")
 createButton = Button(mainMenu,
                 text = "Create team or player",
-                command = lambda: openCreatePlayer(),
+                command = lambda: open_create_player(),
                 font=("Helvetica", 10),
                 width=25)
 
@@ -96,7 +96,7 @@ rankingButton = Button(mainMenu,
 
 showPlayersButton = Button(mainMenu,
                 text = "Show players",
-                command =lambda: Player.print_players(players),
+                command =lambda: [list_sort(players, "fullName"), Player.print_players(players)],
                 font=("Helvetica", 10),
                 width=25)
 
@@ -135,8 +135,8 @@ quitButton.pack()
 mainMenu.pack()
 
 
-#Create player window
-def openCreatePlayer():
+#Create player/team window
+def open_create_player():
     createWindow = Toplevel()
     createWindow.geometry("300x425")
     createWindow.title("Roundnet Denmark - Create Player")
@@ -188,7 +188,7 @@ def openCreatePlayer():
 
     selectFirst = tkinter.ttk.Combobox(createWindow,
                                        state= "readonly",
-                                       values= [p.first_name + " " + p.last_name  for p in players])
+                                       values= [p.firstName + " " + p.lastName  for p in players])
 
     # Select second player
     secondPlayer = Label(createWindow, text="Second player:",
@@ -197,7 +197,7 @@ def openCreatePlayer():
 
     selectSecond = tkinter.ttk.Combobox(createWindow,
                                        state="readonly",
-                                       values=[p.first_name + " " + p.last_name for p in players])
+                                       values=[p.firstName + " " + p.lastName for p in players])
 
     # Team name
     teamNameLabel = Label(createWindow, text="Team name:",

@@ -2,12 +2,12 @@ class Player():
 
     player_id = 1
 
-    def __init__(self, first_name, last_name,elo):
-        self.first_name = first_name
-        self.last_name = last_name
-        self.full_name = first_name + " " + last_name
+    def __init__(self, firstName, lastName,elo):
+        self.firstName = firstName
+        self.lastName = lastName
+        self.fullName = firstName + " " + lastName
         self.elo = elo
-        self.id = first_name + " " + last_name + ": Player_id " + str(Player.player_id)
+        self.id = firstName + " " + lastName + ": Player_id " + str(Player.player_id)
 
         Player.player_id += 1
 
@@ -20,7 +20,7 @@ class Player():
     # Prints the names of all players currently in the database
     def print_players(list):
         for l in list:
-            print(l.full_name)
+            print(l.fullName)
 
     #Show player ranking
     def player_ranking(list):
@@ -37,7 +37,7 @@ class Player():
     def find_player_name(playerValue, list):
         player = None
         for x in list:
-            if x.full_name == playerValue:
+            if x.fullName == playerValue:
                 player = x
         return player
 
@@ -61,10 +61,10 @@ class Player():
             expected_win_probability = 1 / (1 + 10 ** ((loser.elo - winner.elo) / 400))
             winner.elo = winner.elo + k * (1 - expected_win_probability)
             loser.elo = loser.elo + k * (expected_win_probability - 1)
-            print("The new rankingpoints of " + winner.full_name + " is: " + str(
+            print("The new rankingpoints of " + winner.fullName + " is: " + str(
                 int(winner.elo)))
             print(
-                "The new rankingpoints of " + loser.full_name + " is: " + str(int(loser.elo)))
+                "The new rankingpoints of " + loser.fullName + " is: " + str(int(loser.elo)))
             winner = None
             loser = None
         except AttributeError:

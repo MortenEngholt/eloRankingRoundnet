@@ -40,12 +40,12 @@ while True:
             print("What is the first name of the second player? ")
             Player.print_players(players)
             second_player = input().capitalize().strip()
-            team_name = input("What is the name of the team? ").capitalize().strip()
-            teams.append(Team(Player.find_player_name(first_player, players),Player.find_player_name(second_player, players),team_name))
+            teamName = input("What is the name of the team? ").capitalize().strip()
+            teams.append(Team(Player.find_player_name(first_player, players),Player.find_player_name(second_player, players),teamName))
         elif select == "P":
-            first_name = input("What is the players first name? ").capitalize().strip()
-            last_name = input("What is the players last name? ").capitalize().strip()
-            players.append(Player(first_name,last_name, 1500))
+            firstName = input("What is the players first name? ").capitalize().strip()
+            lastName = input("What is the players last name? ").capitalize().strip()
+            players.append(Player(firstName,lastName, 1500))
         else:
             option_not_availble()
 
