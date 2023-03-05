@@ -23,8 +23,8 @@ players.append(hjalteKnudsen)
 players.append(rasmineBak)
 players.append(askeHammar)
 
-def list_sort(list, key):
-    list.sort(key=attrgetter(key), reverse=True)
+def list_sort(list, key, reversed):
+    list.sort(key=attrgetter(key), reverse=reversed)
 
 count = 0
 
@@ -75,27 +75,27 @@ header = Label(window,
 
 #buttons
 mainMenu = Frame(window, padx=5, pady=5, bg="white")
+gameButton = Button(mainMenu,
+                text = "Submit a game",
+                command = lambda: open_submit_game(),
+                font=("Helvetica", 10),
+                width=25)
+
 createButton = Button(mainMenu,
                 text = "Create team or player",
                 command = lambda: open_create_player(),
                 font=("Helvetica", 10),
                 width=25)
 
-gameButton = Button(mainMenu,
-                text = "Submit a game",
-                command =click,
-                font=("Helvetica", 10),
-                width=25)
-
 rankingButton = Button(mainMenu,
                 text = "Show rankings",
-                command =lambda: [list_sort(players, "elo"),Player.player_ranking(players)],
+                command =lambda: [list_sort(players, "elo", True),Player.player_ranking(players)],
                 font=("Helvetica", 10),
                 width=25)
 
 showPlayersButton = Button(mainMenu,
                 text = "Show players",
-                command =lambda: [list_sort(players, "fullName"), Player.print_players(players)],
+                command =lambda: [list_sort(players, "fullName", False), Player.print_players(players)],
                 font=("Helvetica", 10),
                 width=25)
 
@@ -124,8 +124,8 @@ quitButton = Button(mainMenu,
                 width=25)
 
 header.pack(side= TOP, fill=BOTH)
-createButton.pack()
 gameButton.pack()
+createButton.pack()
 rankingButton.pack()
 showPlayersButton.pack()
 showTeamsButton.pack()
@@ -134,14 +134,63 @@ loadButton.pack()
 quitButton.pack()
 mainMenu.pack()
 
+#Create a game
+def open_submit_game():
+    submitGameWindow = Toplevel()
+    submitGameWindow.geometry("400x500")
+    submitGameWindow.title("Submit Game")
+    submitGameWindow.config(background="white")
+
+    #Header for submitting a game using teams
+    headerTeam = Label(submitGameWindow,
+                       font="helvetica 13 bold",
+                       text="Submit a game using team names",
+                       fg="white",
+                       bg="black")
+
+    # Select winning team
+    winTeam = Label(submitGameWindow, text="Winning team:",
+                        fg="black",
+                        bg="white")
+
+    selectWinner = tkinter.ttk.Combobox(submitGameWindow,
+                                       state="readonly",
+                                       values=[t.teamId for t in teams])
+
+    #select losing team
+    loseTeam = Label(submitGameWindow, text="Losing team:",
+                    fg="black",
+                    bg="white")
+
+    selectLoser = tkinter.ttk.Combobox(submitGameWindow,
+                                        state="readonly",
+                                        values=[t.teamName + ": " + t.player1.fullName + " & " + t.player2.fullName for
+                                                t in teams])
+
+    # Submit game
+    submitButtonTeam = Button(submitGameWindow,
+                              text="Submit Game",
+                              command=lambda: [Team.game_team(Team.find_teamName(selectWinner.get(),teams),Team.find_teamName(selectLoser.get(),teams)),
+                                               submitGameWindow.destroy()],
+                              bd=0)
+
+    headerTeam.pack(fill=BOTH)
+    winTeam.pack()
+    selectWinner.pack(fill=BOTH)
+    loseTeam.pack()
+    selectLoser.pack(fill=BOTH)
+    submitButtonTeam.pack()
+
+
 
 #Create player/team window
 def open_create_player():
     createWindow = Toplevel()
     createWindow.geometry("300x425")
-    createWindow.title("Roundnet Denmark - Create Player")
+    createWindow.title("Create Player or Team")
     createWindow.config(background="white")
 
+    #Header for creating a player
     headerPlayer = Label(createWindow,
                    font = "helvetica 13 bold",
                    text="Create Player for the ranking database",
@@ -218,21 +267,19 @@ def open_create_player():
                            bd=0)
 
     headerPlayer.pack(fill=BOTH)
-    firstNameLabel.pack(anchor= W)
-    entryFirstName.pack(anchor= W)
-    lastNameLabel.pack(anchor= W)
-    entryLastName.pack(anchor= W)
-    submitButtonPlayer.pack(anchor= W,
-                       pady=(20,50))
+    firstNameLabel.pack()
+    entryFirstName.pack(fill=BOTH)
+    lastNameLabel.pack()
+    entryLastName.pack(fill=BOTH)
+    submitButtonPlayer.pack(pady=(20,50))
     headerTeam.pack(fill=BOTH)
-    firstPlayer.pack(anchor = W)
-    selectFirst.pack(anchor=W)
-    secondPlayer.pack(anchor=W)
-    selectSecond.pack(anchor=W)
-    teamNameLabel.pack(anchor=W)
-    entryTeamName.pack(anchor=W)
-    submitButtonTeam.pack(anchor=W,
-                          pady=(20,0))
+    firstPlayer.pack()
+    selectFirst.pack(fill=BOTH)
+    secondPlayer.pack()
+    selectSecond.pack(fill=BOTH)
+    teamNameLabel.pack()
+    entryTeamName.pack(fill=BOTH)
+    submitButtonTeam.pack(pady=(20,0))
 
 #Open window
 window.mainloop()
