@@ -28,9 +28,14 @@ class Team():
         print("---------------------------------------------------")
         n = 1
         for t in list:
-            print(str(n) + ". " + t.teamName + "(" + t.player1.full.name + ", " + t.player2.full.name + ") " + "Elo: " + str(int(t.elo)))
+            print(str(n) + ". " + t.teamName + "(" + t.teamId + ") " + "Elo: " + str(int(t.elo)))
             n += 1
         print("---------------------------------------------------")
+
+    #update team elo
+    def compute_team_elo(team):
+        team.elo = (team.player1.elo + team.player2.elo)/2
+        return team.elo
 
     #Returns a team from the database given the teamName
     def find_teamName(teamValue,list):
@@ -40,16 +45,12 @@ class Team():
                 team = t
         return team
 
-    #Function called when Game is chosen in Main
-    def game_team(winner, loser):
-        if winner == loser:
-            print("Sorry can't compute game between the same player")
-        else:
-            Team.update_ranking_team(winner, loser)
-
     #Used to update the rankings according to a team game
     def update_ranking_team(winner, loser, k=32):
-            expected_win_probability = 1 / (1 + 10 ** ((loser.elo - winner.elo) / 400))
+        if winner.teamId == loser.teamId:
+            print("Sorry can't compute game between the same two teams")
+        else:
+            expected_win_probability = 1 / (1 + 10 ** ((Team.compute_team_elo(loser) - Team.compute_team_elo(winner)) / 400))
             winner.player1.elo = winner.player1.elo + k * (1 - expected_win_probability)
             winner.player2.elo = winner.player2.elo + k * (1 - expected_win_probability)
             loser.player1.elo = loser.player1.elo + k * (expected_win_probability - 1)

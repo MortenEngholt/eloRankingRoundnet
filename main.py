@@ -10,18 +10,18 @@ players = []
 teams = []
 
 #Dummy player and team objects - to be deleted later on. For now just for testing
-mortenEngholt = Player("Morten", "Engholt", 1600)
-hjalteKnudsen = Player("Hjalte", "Knudsen", 1550)
-rasmineBak = Player("Rasmine", "Bak", 1430)
-askeHammar = Player("Aske", "Hammar", 1426)
-t1 = Team(mortenEngholt, hjalteKnudsen, "T1")
-t2 = Team(rasmineBak, askeHammar, "T2")
-teams.append(t1)
-teams.append(t2)
-players.append(mortenEngholt)
-players.append(hjalteKnudsen)
-players.append(rasmineBak)
-players.append(askeHammar)
+#mortenEngholt = Player("Morten", "Engholt", 1600)
+#hjalteKnudsen = Player("Hjalte", "Knudsen", 1550)
+#rasmineBak = Player("Rasmine", "Bak", 1430)
+#askeHammar = Player("Aske", "Hammar", 1426)
+#t1 = Team(mortenEngholt, hjalteKnudsen, "T1")
+#t2 = Team(rasmineBak, askeHammar, "T2")
+#teams.append(t1)
+#teams.append(t2)
+#players.append(mortenEngholt)
+#players.append(hjalteKnudsen)
+#players.append(rasmineBak)
+#players.append(askeHammar)
 
 count = 0
 
@@ -45,12 +45,14 @@ def load():
         players.clear()
         for line in config_dictionary:
             players.append(line)
+        players_file.close()
     #Load teams
     with open('teams', 'rb') as teams_file:
         config_dictionary = pickle.load(teams_file)
         teams.clear()
         for line in config_dictionary:
             teams.append(line)
+        teams_file.close()
 
 
 #Main window
@@ -167,7 +169,7 @@ def open_submit_game():
     # Submit game
     submitButtonTeam = Button(submitGameWindow,
                               text="Submit Game",
-                              command=lambda: [Team.game_team(Team.find_teamName(selectWinner.get(),teams),Team.find_teamName(selectLoser.get(),teams)),
+                              command=lambda: [Team.update_ranking_team(Team.find_teamName(selectWinner.get(),teams),Team.find_teamName(selectLoser.get(),teams)),
                                                submitGameWindow.destroy()],
                               bd=0)
 
