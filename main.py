@@ -23,9 +23,6 @@ players.append(hjalteKnudsen)
 players.append(rasmineBak)
 players.append(askeHammar)
 
-def list_sort(list, key, reversed):
-    list.sort(key=attrgetter(key), reverse=reversed)
-
 count = 0
 
 def click():
@@ -89,13 +86,13 @@ createButton = Button(mainMenu,
 
 rankingButton = Button(mainMenu,
                 text = "Show rankings",
-                command =lambda: [list_sort(players, "elo", True),Player.player_ranking(players)],
+                command =lambda: [players.sort(key=lambda p: p.elo, reverse=True),Player.player_ranking(players)],
                 font=("Helvetica", 10),
                 width=25)
 
 showPlayersButton = Button(mainMenu,
                 text = "Show players",
-                command =lambda: [list_sort(players, "fullName", False), Player.print_players(players)],
+                command =lambda: [players.sort(key=lambda p: p.fullName), Player.print_players(players)],
                 font=("Helvetica", 10),
                 width=25)
 
@@ -219,7 +216,7 @@ def open_create_player():
     #Submit button
     submitButtonPlayer = Button(createWindow,
                            text="Create Player",
-                           command=lambda: [players.append(Player(entryFirstName.get(), entryLastName.get(), 1500)),
+                           command=lambda: [players.append(Player(entryFirstName.get().capitalize(), entryLastName.get().capitalize(), 1500)),
                                             createWindow.destroy()],
                            bd=0)
 
@@ -237,7 +234,7 @@ def open_create_player():
 
     selectFirst = tkinter.ttk.Combobox(createWindow,
                                        state= "readonly",
-                                       values= [p.firstName + " " + p.lastName  for p in players])
+                                       values= [p.fullName  for p in players])
 
     # Select second player
     secondPlayer = Label(createWindow, text="Second player:",
@@ -246,7 +243,7 @@ def open_create_player():
 
     selectSecond = tkinter.ttk.Combobox(createWindow,
                                        state="readonly",
-                                       values=[p.firstName + " " + p.lastName for p in players])
+                                       values=[p.fullName for p in players])
 
     # Team name
     teamNameLabel = Label(createWindow, text="Team name:",
@@ -262,7 +259,7 @@ def open_create_player():
     # Submit team
     submitButtonTeam = Button(createWindow,
                            text="Create Team",
-                           command=lambda: [teams.append(Team(Player.find_player_name(selectFirst.get(), players), Player.find_player_name(selectSecond.get(), players), entryTeamName.get())),
+                           command=lambda: [teams.append(Team(Player.find_player_name(selectFirst.get(), players), Player.find_player_name(selectSecond.get(), players), entryTeamName.get().capitalize())),
                                             createWindow.destroy()],
                            bd=0)
 
